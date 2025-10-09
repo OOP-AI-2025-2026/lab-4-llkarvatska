@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import ua.opnu.java.inheritance.bill.DiscountBill;
 import ua.opnu.java.inheritance.bill.Employee;
 import ua.opnu.java.inheritance.bill.Item;
 
@@ -7,8 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Task1Test {
 
+    // Встановлюємо допустиму похибку для порівняння double
+    private static final double DELTA = 0.0001;
+
     @Nested
-    @DisplayName("Tests for the first task")
+    @DisplayName("Tests for the first task (DiscountBill)")
     class Test {
         @org.junit.jupiter.api.Test
         @DisplayName("Test clerk for constructor 1")
@@ -27,51 +32,51 @@ public class Task1Test {
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getTotal() 1")
+        @DisplayName("Test getTotal() 3 (Non-preferred)")
         void test3() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("candy bar", 1.35, 0.25));
 
             double expected = 1.35;
-            assertEquals(expected, bill.getTotal());
+            assertEquals(expected, bill.getTotal(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getTotal() 2")
+        @DisplayName("Test getTotal() 4 (Preferred)")
         void test4() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("candy bar", 1.35, 0.25));
 
             double expected = 1.10;
-            assertEquals(expected, bill.getTotal());
+            assertEquals(expected, bill.getTotal(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getTotal() 3")
+        @DisplayName("Test getTotal() 5 (Non-preferred, no discount)")
         void test5() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("newspaper", 0.99, 0.0));
 
             double expected = 0.99;
-            assertEquals(expected, bill.getTotal());
+            assertEquals(expected, bill.getTotal(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getTotal() 4")
+        @DisplayName("Test getTotal() 6 (Preferred, no discount)")
         void test6() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("newspaper", 0.99, 0.0));
 
             double expected = 0.99;
-            assertEquals(expected, bill.getTotal());
+            assertEquals(expected, bill.getTotal(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getTotal() 4")
+        @DisplayName("Test getTotal() 7 (Non-preferred, Complex)")
         void test7() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
@@ -82,11 +87,11 @@ public class Task1Test {
             bill.add(new Item("newspaper", 0.99, 0.0));
 
             double expected = 6.19;
-            assertEquals(expected, bill.getTotal());
+            assertEquals(expected, bill.getTotal(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getTotal() 5")
+        @DisplayName("Test getTotal() 8 (Preferred, Complex)")
         void test8() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
@@ -97,11 +102,11 @@ public class Task1Test {
             bill.add(new Item("newspaper", 0.99, 0.0));
 
             double expected = 5.34;
-            assertEquals(expected, bill.getTotal());
+            assertEquals(expected, bill.getTotal(), DELTA); // ВИПРАВЛЕНО
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountCount() 1")
+        @DisplayName("Test getDiscountCount() 9 (Non-preferred)")
         void test9() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
@@ -112,7 +117,7 @@ public class Task1Test {
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountCount() 2")
+        @DisplayName("Test getDiscountCount() 10 (Preferred, one discounted item)")
         void test10() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
@@ -123,7 +128,7 @@ public class Task1Test {
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountCount() 3")
+        @DisplayName("Test getDiscountCount() 11 (Non-preferred, no discount item)")
         void test11() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
@@ -134,18 +139,18 @@ public class Task1Test {
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountCount() 4")
+        @DisplayName("Test getDiscountCount() 12 (Preferred, no discount item)")
         void test12() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
-            bill.add(new Item("gift card", 75.00, 0.0)); // <-- no discount!
+            bill.add(new Item("gift card", 75.00, 0.0));
 
             int expected = 0;
             assertEquals(expected, bill.getDiscountCount());
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountCount() 5")
+        @DisplayName("Test getDiscountCount() 13 (Non-preferred, Complex)")
         void test13() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
@@ -161,14 +166,14 @@ public class Task1Test {
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountCount() 6")
+        @DisplayName("Test getDiscountCount() 14 (Preferred, Complex)")
         void test14() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("notebook", 3.00, 0.15));
-            bill.add(new Item("lemonade", 1.50, 0.0)); // <-- no discount!
+            bill.add(new Item("lemonade", 1.50, 0.0));
             bill.add(new Item("bread", 2.25, 0.35));
-            bill.add(new Item("gift card", 75.00, 0.0)); // <-- no discount!
+            bill.add(new Item("gift card", 75.00, 0.0));
             bill.add(new Item("bagels", 1.30, 0.16));
             bill.add(new Item("antique table", 125.00, 35.50));
 
@@ -177,51 +182,51 @@ public class Task1Test {
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountAmount() 1")
+        @DisplayName("Test getDiscountAmount() 15 (Non-preferred)")
         void test15() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("popcorn", 1.02, 0.12));
 
             double expected = 0.0;
-            assertEquals(expected, bill.getDiscountAmount());
+            assertEquals(expected, bill.getDiscountAmount(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountAmount() 2")
+        @DisplayName("Test getDiscountAmount() 16 (Preferred)")
         void test16() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("popcorn", 1.02, 0.12));
 
             double expected = 0.12;
-            assertEquals(expected, bill.getDiscountAmount());
+            assertEquals(expected, bill.getDiscountAmount(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountAmount() 3")
+        @DisplayName("Test getDiscountAmount() 17 (Non-preferred, no discount)")
         void test17() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("juice", 1.50, 0.0));
 
             double expected = 0.0;
-            assertEquals(expected, bill.getDiscountAmount());
+            assertEquals(expected, bill.getDiscountAmount(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountAmount() 4")
+        @DisplayName("Test getDiscountAmount() 18 (Preferred, no discount)")
         void test18() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("juice", 1.50, 0.0));
 
             double expected = 0.0;
-            assertEquals(expected, bill.getDiscountAmount());
+            assertEquals(expected, bill.getDiscountAmount(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountAmount() 5")
+        @DisplayName("Test getDiscountAmount() 19 (Non-preferred, Complex)")
         void test19() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
@@ -231,11 +236,11 @@ public class Task1Test {
             bill.add(new Item("juice", 1.50, 0.0));
 
             double expected = 0.0;
-            assertEquals(expected, bill.getDiscountAmount());
+            assertEquals(expected, bill.getDiscountAmount(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountAmount() 6")
+        @DisplayName("Test getDiscountAmount() 20 (Preferred, Complex)")
         void test20() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
@@ -245,55 +250,55 @@ public class Task1Test {
             bill.add(new Item("juice", 1.50, 0.0));
 
             double expected = 18.47;
-            assertEquals(expected, bill.getDiscountAmount());
+            assertEquals(expected, bill.getDiscountAmount(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountPercent() 1")
+        @DisplayName("Test getDiscountPercent() 21 (Non-preferred)")
         void test21() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("rice", 3.00, 0.75));
 
             double expected = 0.0;
-            assertEquals(expected, bill.getDiscountPercent());
+            assertEquals(expected, bill.getDiscountPercent(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountPercent() 2")
+        @DisplayName("Test getDiscountPercent() 22 (Preferred)")
         void test22() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("rice", 3.00, 0.75));
 
             double expected = 25.0;
-            assertEquals(expected, bill.getDiscountPercent());
+            assertEquals(expected, bill.getDiscountPercent(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountPercent() 3")
+        @DisplayName("Test getDiscountPercent() 23 (Non-preferred, no discount)")
         void test23() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("vinegar", 4.18, 0.0));
 
             double expected = 0.0;
-            assertEquals(expected, bill.getDiscountPercent());
+            assertEquals(expected, bill.getDiscountPercent(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountPercent() 4")
+        @DisplayName("Test getDiscountPercent() 24 (Preferred, no discount)")
         void test24() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
             bill.add(new Item("vinegar", 4.18, 0.0));
 
             double expected = 0.0;
-            assertEquals(expected, bill.getDiscountPercent());
+            assertEquals(expected, bill.getDiscountPercent(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountPercent() 5")
+        @DisplayName("Test getDiscountPercent() 25 (Non-preferred, Complex)")
         void test25() {
             boolean preferred = false;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
@@ -304,11 +309,11 @@ public class Task1Test {
             bill.add(new Item("flour", 6.50, 2.25));
 
             double expected = 0.0;
-            assertEquals(expected, bill.getDiscountPercent());
+            assertEquals(expected, bill.getDiscountPercent(), DELTA);
         }
 
         @org.junit.jupiter.api.Test
-        @DisplayName("Test getDiscountPercent() 6")
+        @DisplayName("Test getDiscountPercent() 26 (Preferred, Complex)")
         void test26() {
             boolean preferred = true;
             DiscountBill bill = new DiscountBill(new Employee("clerk-1"), preferred);
@@ -319,7 +324,7 @@ public class Task1Test {
             bill.add(new Item("flour", 6.50, 2.25));
 
             double expected = 16.6421928536466;
-            assertEquals(expected, bill.getDiscountPercent());
+            assertEquals(expected, bill.getDiscountPercent(), DELTA); // ВИПРАВЛЕНО
         }
     }
 }
